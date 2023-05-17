@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Animated Page</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #ffffff;
+        text-align: center;
+      }
+      h1 {
+        color: #333;
+      }
+      .animatedShape {
+        position: relative;
+        margin: 20px auto;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+      }
+      #box1 {
+        width: 100px;
+        height: 100px;
+        background-color: #007bff;
+        animation-name: moveBox1;
+      }
+      #circle1 {
+        width: 100px;
+        height: 100px;
+        background-color: #28a745;
+        border-radius: 50%;
+        animation-name: moveCircle1;
+      }
+      #box2 {
+        width: 100px;
+        height: 100px;
+        background-color: #dc3545;
+        animation-name: moveBox2;
+      }
+      @keyframes moveBox1 {
+        0% {
+          left: 0;
+        }
+        50% {
+          left: 200px;
+        }
+        100% {
+          left: 0;
+        }
+      }
+      @keyframes moveCircle1 {
+        0% {
+          top: 0;
+        }
+        50% {
+          top: 200px;
+        }
+        100% {
+          top: 0;
+        }
+      }
+      @keyframes moveBox2 {
+        0% {
+          left: 0;
+          top: 0;
+        }
+        25% {
+          left: 200px;
+          top: 0;
+        }
+        50% {
+          left: 200px;
+          top: 200px;
+        }
+        75% {
+          left: 0;
+          top: 200px;
+        }
+        100% {
+          left: 0;
+          top: 0;
+        }
+      }
+      #circle2,
+      #circle3 {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        animation-name: moveCircle;
+        background-color: #272020;
+      }
+
+      @keyframes moveCircle {
+        0% {
+          top: 0;
+        }
+        50% {
+          top: 200px;
+        }
+        100% {
+          top: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to My Simple Animated Page!</h1>
+    <div id="box1" class="animatedShape"></div>
+    <div id="circle1" class="animatedShape"></div>
+    <div id="box2" class="animatedShape"></div>
+    <div id="circle2" class="animatedShape"></div>
+    <div id="circle3" class="animatedShape"></div>
+
+    <div id="followMouse" style="position: absolute; pointer-events: none">
+      Ali!
+    </div>
+
+    <script>
+      var followMouse = document.getElementById("followMouse");
+
+      document.onmousemove = function (event) {
+        var x = event.clientX;
+        var y = event.clientY;
+        followMouse.style.left = x + "px";
+        followMouse.style.top = y + "px";
+      };
+
+      var circle2 = document.getElementById("circle2");
+      var circle3 = document.getElementById("circle3");
+
+      function getRandomColor() {
+        var letters = "0123456789ABCDEF";
+        var color = "#";
+        for (var i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+
+      var isMoving = false;
+
+      function getRandomPosition(element) {
+        var y = window.innerWidth - 2 * element.offsetWidth;
+        var x = window.innerHeight - 2 * element.offsetHeight;
+        var randomX = Math.floor(Math.random() * x);
+        var randomY = Math.floor(Math.random() * y);
+        return [randomX, randomY];
+      }
+
+      function moveElementToRandomPosition(element) {
+        var randomPosition = getRandomPosition(element);
+        element.style.top = randomPosition[0] + "px";
+        element.style.left = randomPosition[1] + "px";
+      }
+
+      document.onmousemove = function () {
+        if (!isMoving) {
+          isMoving = true;
+          setTimeout(function () {
+            moveElementToRandomPosition(circle2);
+            moveElementToRandomPosition(circle3);
+            isMoving = false;
+          }, 1000); // delay in milliseconds
+        }
+      };
+    </script>
+  </body>
+</html>
